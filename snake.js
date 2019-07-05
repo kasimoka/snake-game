@@ -11,20 +11,26 @@ class game {
     // this.gameContainer.innerHTML = "";
     // this.drawHeader();
     // this.drawInfo();
-    this.drawGameField();
+    this.info = new information(this.gameContainer.querySelector(".score"));
+    this.field = new gameField(
+      document.querySelector(".field"),
+      FIELD_WIDTH,
+      FIELD_HEIGHT
+    );
+    // this.field.drawField();
+    // this.drawGameField();
     // setInterval(() => {
-    //     this.info.refresh(++this.score, --this.lvl);
+    //   this.info.refresh(++this.score, --this.lvl);
     // }, 500);
   }
 
-  drawGameField = function() {
-    // this.fieldElement = document.createElement("div");
-    // this.fieldElement.classList.add("field");
-    // this.gameContainer.appendChild(this.fieldElement);
-    this.field = new gameField(document.querySelector('.field'), FIELD_WIDTH, FIELD_HEIGHT);
-    this.field.drawField();
-    // return this.fieldArray();
-  };
+  //   drawGameField = function() {
+  // this.fieldElement = document.createElement("div");
+  // this.fieldElement.classList.add("field");
+  // this.gameContainer.appendChild(this.fieldElement);
+
+  // return this.fieldArray();
+  //   };
 }
 
 class gameField {
@@ -33,6 +39,7 @@ class gameField {
     this.width = width;
     this.height = height;
     this.field = [];
+    this.drawField();
   }
 
   drawField = function() {
