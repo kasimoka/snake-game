@@ -66,6 +66,12 @@ class gameField {
   drawHead = function(snakeHead) {
     console.log(snakeHead);
   };
+
+  eraseSnake = function() {
+    this.element.querySelectorAll(".snakeBody").forEach(item => {
+      item.clearCell();
+    });
+  };
 }
 
 class cell {
@@ -75,6 +81,14 @@ class cell {
 
   clearCell = function() {
     this.element.className = "cell";
+  };
+
+  drawSnakeBody = function() {
+    this.element.classList.add("snakeBody");
+  };
+
+  drawHead = function() {
+    this.element.classList.add("snakeHead");
   };
 }
 
