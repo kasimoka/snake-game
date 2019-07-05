@@ -1,0 +1,21 @@
+.cell {
+    background-color: grey;
+    width: 10px;
+}
+
+#host {
+    transform: translate(25%, 25%);
+}
+
+.row {
+    display: flex;
+    height: 10px;
+}
+
+html body {
+    margin: 0;
+}
+
+.bg-white {
+    background-color: white;
+}
