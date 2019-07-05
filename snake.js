@@ -18,11 +18,11 @@ class game {
   }
 
   drawGameField = function() {
-    this.fieldElement = document.createElement("div");
-    this.fieldElement.classList.add("field");
-    this.gameContainer.appendChild(this.fieldElement);
-    this.field = new gameField(this.fieldElement, FIELD_WIDTH, FIELD_HEIGHT);
-    this.fieldArray = this.field.drawField();
+    // this.fieldElement = document.createElement("div");
+    // this.fieldElement.classList.add("field");
+    // this.gameContainer.appendChild(this.fieldElement);
+    this.field = new gameField(document.querySelector('.field'), FIELD_WIDTH, FIELD_HEIGHT);
+    this.field.drawField();
     // return this.fieldArray();
   };
 }
