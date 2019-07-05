@@ -86,14 +86,9 @@ class food {
 
 class information {
   constructor(hostElement) {
-    this.element = document.createElement("div");
-    this.score = document.createElement("span");
-    this.level = document.createElement("span");
-    hostElement.appendChild(this.element);
-    this.element.classList.add("score");
-    this.element.appendChild(this.score);
-    this.element.appendChild(document.createElement("br"));
-    this.element.appendChild(this.level);
+    this.element = hostElement;
+    this.score = this.element.querySelectorAll('span')[0];
+    this.level = this.element.querySelectorAll('span')[1];
   }
 
   refresh = function(score, lvl) {
