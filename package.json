@@ -1,0 +1,29 @@
+{
+  "name": "snake-game",
+  "version": "0.0.1",
+  "description": "Simple snake game on javascript",
+  "main": "snake.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kasimoka/snake-game.git"
+  },
+  "keywords": [
+    "snake",
+    "game",
+    "javascript",
+    "es6"
+  ],
+  "author": "kasimoka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/kasimoka/snake-game/issues"
+  },
+  "homepage": "https://github.com/kasimoka/snake-game#readme",
+  "devDependencies": {
+    "eslint": "^6.0.1",
+    "eslint-config-google": "^0.13.0"
+  }
+}
