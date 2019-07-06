@@ -1,6 +1,10 @@
-const FIELD_WIDTH = 100;
+const FIELD_WIDTH = 70;
 const FIELD_HEIGHT = 40;
-const START_SPEED = 100;
+const START_SPEED = 500;
+const DIRECTION_LEFT = 37;
+const DIRECTION_RIGHT = 39;
+const DIRECTION_UP = 38;
+const DIRECTION_DOWN = 40;
 
 class game {
   constructor(gameContainer, startSpeed) {
@@ -17,20 +21,15 @@ class game {
       FIELD_WIDTH,
       FIELD_HEIGHT
     );
-    // this.field.drawField();
-    // this.drawGameField();
-    // setInterval(() => {
-    //   this.info.refresh(++this.score, --this.lvl);
-    // }, 500);
+    this.snake = new snake();
+    this.field.drawSnake(this.snake.getSnakeBody());
+    window.addEventListener("keydown", event => {
+      if (event.keyCode >= 37 && event.keyCode <= 40) {
+        this.snake.changeDirection(event.keyCode);
+        event.preventDefault();
+      }
+    });
   }
-
-  //   drawGameField = function() {
-  // this.fieldElement = document.createElement("div");
-  // this.fieldElement.classList.add("field");
-  // this.gameContainer.appendChild(this.fieldElement);
-
-  // return this.fieldArray();
-  //   };
 }
 
 class gameField {
@@ -56,7 +55,6 @@ class gameField {
         this.field[i][j].clearCell();
       }
     }
-    // return this.field;
   };
 
   drawSnake = function(snakeBody) {
@@ -96,6 +94,7 @@ class snake {
   constructor() {
     this.snakeBody = [[20, 0], [20, 1], [20, 2]];
     this.head = this.snakeBody[this.snakeBody.length - 1];
+    this.direction = DIRECTION_RIGHT;
   }
 
   getHead = function() {
@@ -104,6 +103,12 @@ class snake {
 
   getSnakeBody = function() {
     return this.snakeBody;
+  };
+  changeDirection = function(newDirection) {
+    if (Math.abs(newDirection - this.direction) % 2) {
+      this.direction = newDirection;
+    }
+    console.log(this.direction);
   };
 }
 
