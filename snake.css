@@ -30,3 +30,9 @@ html body {
     justify-content: center;
     flex-wrap: wrap
 }
+.snakeBody {
+    background-color: chartreuse;
+}
+.snakeHead {
+    background-color: crimson;
+}

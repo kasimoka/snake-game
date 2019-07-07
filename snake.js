@@ -5,16 +5,17 @@ const DIRECTION_LEFT = 37;
 const DIRECTION_RIGHT = 39;
 const DIRECTION_UP = 38;
 const DIRECTION_DOWN = 40;
+const GAME_STARTED = "start";
+const GAME_PAUSED = "pause";
+const GAME_OVER = "gameover";
 
 class game {
   constructor(gameContainer, startSpeed) {
     this.lvl = 0;
     this.speed = startSpeed; // game speed in ms
     this.score = 0;
+    this.status = GAME_STARTED;
     this.gameContainer = gameContainer;
-    // this.gameContainer.innerHTML = "";
-    // this.drawHeader();
-    // this.drawInfo();
     this.info = new information(this.gameContainer.querySelector(".score"));
     this.field = new gameField(
       document.querySelector(".field"),
@@ -23,13 +24,44 @@ class game {
     );
     this.snake = new snake();
     this.field.drawSnake(this.snake.getSnakeBody());
+    this.field.drawHead(this.snake.getHead());
+
     window.addEventListener("keydown", event => {
       if (event.keyCode >= 37 && event.keyCode <= 40) {
         this.snake.changeDirection(event.keyCode);
         event.preventDefault();
       }
+      if (event.keyCode == 32) {
+        switch (this.status) {
+          case GAME_STARTED:
+            this.stopGame();
+            break;
+          case GAME_PAUSED:
+            this.startGame();
+          case GAME_OVER:
+            break;
+          default:
+            break;
+        }
+        this.stopGame();
+      }
     });
+    this.startGame();
   }
+  startGame = function() {
+    this.timeEngine = setInterval(() => {
+      this.field.eraseSnake(this.snake.getSnakeBody());
+      this.snake.move();
+      this.field.drawSnake(this.snake.getSnakeBody());
+      this.field.drawHead(this.snake.getHead());
+    }, this.speed);
+    this.status = GAME_STARTED;
+  };
+
+  stopGame = function() {
+    clearInterval(this.timeEngine);
+    this.status = GAME_PAUSED;
+  };
 }
 
 class gameField {
@@ -58,16 +90,18 @@ class gameField {
   };
 
   drawSnake = function(snakeBody) {
-    console.log(snakeBody);
+    snakeBody.forEach(i => {
+      this.field[i[0]][i[1]].drawSnakeBody();
+    });
   };
 
   drawHead = function(snakeHead) {
-    console.log(snakeHead);
+    this.field[snakeHead[0]][snakeHead[1]].drawHead();
   };
 
-  eraseSnake = function() {
-    this.element.querySelectorAll(".snakeBody").forEach(item => {
-      item.clearCell();
+  eraseSnake = function(snakeBody) {
+    snakeBody.forEach(i => {
+      this.field[i[0]][i[1]].clearCell();
     });
   };
 }
@@ -108,7 +142,39 @@ class snake {
     if (Math.abs(newDirection - this.direction) % 2) {
       this.direction = newDirection;
     }
-    console.log(this.direction);
+  };
+  move = function() {
+    console.log(this.head);
+    switch (this.direction) {
+      case DIRECTION_LEFT:
+        this.head = [this.head[0], this.head[1] - 1];
+        this.snakeBody.push(this.head);
+        //   greeds[head[0]][head[1] - 1].setColor("red");
+        // console.log(1);
+        break;
+      case DIRECTION_UP:
+        this.head = [this.head[0] - 1, this.head[1]];
+        this.snakeBody.push(this.head);
+        //   greeds[head[0] - 1][head[1]].setColor("red");
+        console.log(2);
+        break;
+      case DIRECTION_RIGHT:
+        this.head = [this.head[0], this.head[1] + 1];
+        this.snakeBody.push(this.head);
+        //   greeds[head[0]][head[1] + 1].setColor("red");
+        console.log(3);
+        break;
+      case DIRECTION_DOWN:
+        this.head = [this.head[0] + 1, this.head[1]];
+        this.snakeBody.push(this.head);
+        //   greeds[head[0] + 1][head[1]].setColor("red");
+        console.log(4);
+        break;
+    }
+    this.snakeBody.shift();
+    // console.log(this.head);
+    console.log(this.snakeBody);
+    //   greeds[tail[0]][tail[1]].clearPixel();
   };
 }
 
