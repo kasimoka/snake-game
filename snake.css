@@ -33,6 +33,10 @@ html body {
 .snakeBody {
     background-color: chartreuse;
 }
+.food {
+    background-color: darkviolet;
+    transition-delay: 500;
+}
 .snakeHead {
     background-color: crimson;
 }

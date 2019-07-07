@@ -23,8 +23,11 @@ class game {
       FIELD_HEIGHT
     );
     this.snake = new snake();
+    let foodCoord = this.generateFood();
+    this.snakeFood = new food(foodCoord[0], foodCoord[1]);
     this.field.drawSnake(this.snake.getSnakeBody());
     this.field.drawHead(this.snake.getHead());
+    this.field.drawFood(this.snakeFood.getFoodCoord());
 
     window.addEventListener("keydown", event => {
       if (event.keyCode >= 37 && event.keyCode <= 40) {
@@ -52,6 +55,16 @@ class game {
     this.timeEngine = setInterval(() => {
       this.field.eraseSnake(this.snake.getSnakeBody());
       this.snake.move();
+      if (this.compareFoodAndSnakehead()) {
+        // this.score++;
+        // this.lvl++;
+        this.info.refresh(++this.score, ++this.lvl);
+        let foodCoord = this.generateFood();
+        this.snakeFood = new food(foodCoord[0], foodCoord[1]);
+        this.field.drawFood(this.snakeFood.getFoodCoord());
+      } else {
+        this.snake.redrawTail();
+      }
       this.field.drawSnake(this.snake.getSnakeBody());
       this.field.drawHead(this.snake.getHead());
     }, this.speed);
@@ -61,6 +74,19 @@ class game {
   stopGame = function() {
     clearInterval(this.timeEngine);
     this.status = GAME_PAUSED;
+  };
+
+  generateFood = function() {
+    // let pivot = this.snake.getHead();
+    let x = Math.floor(Math.random() * FIELD_HEIGHT);
+    let y = Math.floor(Math.random() * FIELD_WIDTH);
+    return [x, y];
+  };
+
+  compareFoodAndSnakehead = function() {
+    let head = this.snake.getHead();
+    let fc = this.snakeFood.getFoodCoord();
+    return head[0] == fc[0] && head[1] == fc[1];
   };
 }
 
@@ -81,7 +107,6 @@ class gameField {
       this.element.appendChild(el);
       for (let j = 0; j < this.width; j++) {
         let cellElement = document.createElement("div");
-        // cellElement.classList.add("cell");
         el.appendChild(cellElement);
         this.field[i][j] = new cell(cellElement);
         this.field[i][j].clearCell();
@@ -104,6 +129,10 @@ class gameField {
       this.field[i[0]][i[1]].clearCell();
     });
   };
+
+  drawFood = function(foodCoord) {
+    this.field[foodCoord[0]][foodCoord[1]].drawFood();
+  };
 }
 
 class cell {
@@ -121,6 +150,10 @@ class cell {
 
   drawHead = function() {
     this.element.classList.add("snakeHead");
+  };
+
+  drawFood = function() {
+    this.element.classList.add("food");
   };
 }
 
@@ -144,44 +177,41 @@ class snake {
     }
   };
   move = function() {
-    console.log(this.head);
     switch (this.direction) {
       case DIRECTION_LEFT:
         this.head = [this.head[0], this.head[1] - 1];
         this.snakeBody.push(this.head);
-        //   greeds[head[0]][head[1] - 1].setColor("red");
-        // console.log(1);
         break;
       case DIRECTION_UP:
         this.head = [this.head[0] - 1, this.head[1]];
         this.snakeBody.push(this.head);
-        //   greeds[head[0] - 1][head[1]].setColor("red");
-        console.log(2);
         break;
       case DIRECTION_RIGHT:
         this.head = [this.head[0], this.head[1] + 1];
         this.snakeBody.push(this.head);
-        //   greeds[head[0]][head[1] + 1].setColor("red");
-        console.log(3);
         break;
       case DIRECTION_DOWN:
         this.head = [this.head[0] + 1, this.head[1]];
         this.snakeBody.push(this.head);
-        //   greeds[head[0] + 1][head[1]].setColor("red");
-        console.log(4);
         break;
     }
+    // ;
+  };
+
+  redrawTail = function() {
     this.snakeBody.shift();
-    // console.log(this.head);
-    console.log(this.snakeBody);
-    //   greeds[tail[0]][tail[1]].clearPixel();
   };
 }
 
 class food {
-  constructor() {
-    console.log("create food");
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
   }
+
+  getFoodCoord = function() {
+    return [this.x, this.y];
+  };
 }
 
 class information {
