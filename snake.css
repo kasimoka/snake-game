@@ -25,18 +25,35 @@ html body {
     color: aqua;
     padding: 10px;
 }
+
 .field {
     display: flex;
     justify-content: center;
     flex-wrap: wrap
 }
+
 .snakeBody {
     background-color: chartreuse;
 }
+
 .food {
-    background-color: darkviolet;
-    transition-delay: 500;
+    /* background-color: darkviolet; */
+    /* transition-delay: 500; */
+    animation: blink .7s linear infinite
 }
+
 .snakeHead {
     background-color: crimson;
+}
+
+@keyframes blink {
+    0% {
+        background-color: darkviolet;
+    }
+    50% {
+        background-color: white;
+    }
+    100% {
+        background-color: darkviolet;
+    }
 }
