@@ -111,7 +111,7 @@ class game {
         let y = Math.floor(Math.random() * FIELD_WIDTH);
         let body = this.snake.getSnakeBody();
         body.forEach((i) => {
-            if (i[0] == x && i[1] == y) {
+            if (i[0] == y && i[1] == x) {
                 return this.generateFood();
             }
         });
