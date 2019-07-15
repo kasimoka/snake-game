@@ -1,3 +1,4 @@
+import css from './snake.css';
 const FIELD_WIDTH = 70;
 const FIELD_HEIGHT = 40;
 const BONUS = 75;

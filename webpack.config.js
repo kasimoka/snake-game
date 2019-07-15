@@ -38,6 +38,7 @@ module.exports = {
     new webpack.ProgressPlugin(),
     new HtmlWebpackPlugin({
 	  template: "src/index.html",
+	  title: "Snake game"
     })
   ],
 
@@ -63,10 +64,11 @@ module.exports = {
             ]
           ]
         }
-      }, {
-		test: /\.css$/i,
-		include: [path.resolve(__dirname, "src")],
-        use: ['style-loader', 'css-loader'],
+      },
+      {
+        test: /\.css$/i,
+        // include: [path.resolve(__dirname, "src")],
+        use: ['style-loader', 'css-loader']
       }
     ]
   },
